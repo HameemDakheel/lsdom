@@ -26,18 +26,18 @@ listDomains() {
     # '.result.data.parked_domains[]?' gets each parked domain, or nothing if array is empty/null.
     # 'paste -sd, -' joins them with a comma. If no input, outputs empty string.
     parked_domains_list=$(echo "$getdata" | jq --raw-output '.result.data.parked_domains[]?' | paste -sd, -)
-    [ -z "$parked_domains_list" ] && parked_domains_list="N/A" # Set to N/A if list is empty
+    [ -z "$parked_domains_list" ] && parked_domains_list=" " # Set to N/A if list is empty
 
     # Addon domains
     local addon_domains_list
     addon_domains_list=$(echo "$getdata" | jq --raw-output '.result.data.addon_domains[]?' | paste -sd, -)
-    [ -z "$addon_domains_list" ] && addon_domains_list="N/A"
+    [ -z "$addon_domains_list" ] && addon_domains_list=" "
 
     # Sub-domains
     # '.result.data.sub_domains[].domain?' gets the 'domain' field from each object in sub_domains array.
     local sub_domains_list
     sub_domains_list=$(echo "$getdata" | jq --raw-output '.result.data.sub_domains[].domain?' | paste -sd, -)
-    [ -z "$sub_domains_list" ] && sub_domains_list="N/A"
+    [ -z "$sub_domains_list" ] && sub_domains_list=" "
     
     # Echo the structured string for the calling function to parse
     echo "$user|$parked_domains_list|$addon_domains_list|$sub_domains_list"
